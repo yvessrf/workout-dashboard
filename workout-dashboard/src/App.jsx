@@ -2,6 +2,28 @@ import { useState } from 'react'
 
 
 export default function App() {
+  const [workouts, setWorkouts] = useState([])
+  const [exercise, setExercise] = useState("")
+  const [weight, setWeight] = useState("")
+  const [reps, setReps] = useState("")
+
+  // Função para adicionar um novo treino
+  function addWorkout(event) {
+    event.preventDefault()
+    const newWorkout = {
+      id: Date.now(),
+      exercise,
+      weight,
+      reps
+    }
+    // Atualiza a lista de treinos com o novo treino
+    setWorkouts([...workouts, newWorkout])
+    setExercise("")
+    setWeight("")
+    setReps("")
+  }
+
+
   return (
     <div style={styles.app}>
       <header style={styles.header}>
@@ -35,24 +57,30 @@ export default function App() {
 
         <h2>Registrar treino</h2>
 
-        <form style={styles.form}>
+        <form style={styles.form} onSubmit={addWorkout}>
 
           <input
             style={styles.input}
             type="text"
             placeholder="Exercício"
+            value={exercise}
+            onChange={(e) => setExercise(e.target.value)}
           />
 
           <input
             style={styles.input}
             type="number"
             placeholder="Carga (kg)"
+            value={weight}
+            onChange={(e) => setWeight(e.target.value)}
           />
 
           <input
             style={styles.input}
             type="number"
             placeholder="Repetições"
+            value={reps}
+            onChange={(e) => setReps(e.target.value)}
           />
 
           <button style={styles.submitButton}>
@@ -60,6 +88,36 @@ export default function App() {
           </button>
 
         </form>
+
+        // Lista de treinos registrados
+        <section style={styles.formCard}>
+
+          <h2>Histórico de treinos</h2>
+
+          <div style={styles.workoutList}>
+
+            {workouts.map((workout) => (
+
+              <div
+                key={workout.id}
+                style={styles.workoutItem}
+              >
+
+                <strong>
+                  {workout.exercise}
+                </strong>
+
+                <p>
+                  {workout.weight}kg × {workout.reps}
+                </p>
+
+              </div>
+
+            ))}
+
+          </div>
+
+        </section>
 
       </section>
     </div>
@@ -205,6 +263,25 @@ const styles = {
     fontWeight: "bold",
 
     cursor: "pointer"
+
+  },
+  workoutList: {
+
+    display: "grid",
+
+    gap: "16px",
+
+    marginTop: "20px"
+
+  },
+
+  workoutItem: {
+
+    background: "rgba(255,255,255,0.06)",
+
+    padding: "16px",
+
+    borderRadius: "16px"
 
   }
 
