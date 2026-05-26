@@ -1,122 +1,211 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
 
-function App() {
-  const [count, setCount] = useState(0)
 
+export default function App() {
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
+    <div style={styles.app}>
+      <header style={styles.header}>
         <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
+          <h1 style={styles.title}>
+            Workout Dashboard
+          </h1>
+          <p style={styles.subtitle}>
+            Acompanhe seus treinos e evolução
           </p>
         </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
+        <button style={styles.button}>
+          🌙
         </button>
-      </section>
-
-      <div className="ticks"></div>
-
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
+      </header>
+      <section style={styles.statsGrid}>
+        <div style={styles.card}>
+          <h2>12</h2>
+          <p>Treinos no mês</p>
         </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
+        <div style={styles.card}>
+          <h2>84%</h2>
+          <p>Frequência</p>
+        </div>
+        <div style={styles.card}>
+          <h2>+18kg</h2>
+          <p>PR Supino</p>
         </div>
       </section>
+      <section style={styles.formCard}>
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
+        <h2>Registrar treino</h2>
+
+        <form style={styles.form}>
+
+          <input
+            style={styles.input}
+            type="text"
+            placeholder="Exercício"
+          />
+
+          <input
+            style={styles.input}
+            type="number"
+            placeholder="Carga (kg)"
+          />
+
+          <input
+            style={styles.input}
+            type="number"
+            placeholder="Repetições"
+          />
+
+          <button style={styles.submitButton}>
+            Adicionar treino
+          </button>
+
+        </form>
+
+      </section>
+    </div>
   )
 }
 
-export default App
+const styles = {
+
+  app: {
+
+    minHeight: "100vh",
+
+    background:
+      "linear-gradient(135deg, #0f172a, #1e293b)",
+
+    color: "white",
+
+    fontFamily: "Arial, sans-serif",
+
+    padding: "40px"
+
+  },
+
+  header: {
+
+    display: "flex",
+
+    justifyContent: "space-between",
+
+    alignItems: "center",
+
+    marginBottom: "40px"
+
+  },
+
+  title: {
+
+    fontSize: "36px",
+
+    marginBottom: "8px"
+
+  },
+
+  subtitle: {
+
+    opacity: 0.7
+
+  },
+
+  button: {
+
+    background: "#334155",
+
+    border: "none",
+
+    color: "white",
+
+    padding: "12px 16px",
+
+    borderRadius: "12px",
+
+    cursor: "pointer"
+
+  },
+
+  statsGrid: {
+
+    display: "grid",
+
+    gridTemplateColumns:
+      "repeat(auto-fit, minmax(220px, 1fr))",
+
+    gap: "20px",
+
+    marginBottom: "40px"
+
+  },
+
+  card: {
+
+    background: "rgba(255,255,255,0.08)",
+
+    backdropFilter: "blur(10px)",
+
+    padding: "24px",
+
+    borderRadius: "24px",
+
+    border: "1px solid rgba(255,255,255,0.08)"
+
+  },
+
+  formCard: {
+
+    background: "rgba(255,255,255,0.08)",
+
+    padding: "24px",
+
+    borderRadius: "24px",
+
+    backdropFilter: "blur(10px)"
+
+  },
+
+  form: {
+
+    display: "grid",
+
+    gap: "16px",
+
+    marginTop: "20px"
+
+  },
+
+  input: {
+
+    padding: "14px",
+
+    borderRadius: "12px",
+
+    border: "none",
+
+    outline: "none",
+
+    background: "rgba(255,255,255,0.08)",
+
+    color: "white"
+
+  },
+
+  submitButton: {
+
+    background: "#3b82f6",
+
+    border: "none",
+
+    padding: "14px",
+
+    borderRadius: "12px",
+
+    color: "white",
+
+    fontWeight: "bold",
+
+    cursor: "pointer"
+
+  }
+
+}
