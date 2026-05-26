@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import WorkoutForm from "./components/WorkoutForm"
+import WorkoutList from "./components/WorkoutList"
 
 
 export default function App() {
@@ -57,67 +59,22 @@ export default function App() {
 
         <h2>Registrar treino</h2>
 
-        <form style={styles.form} onSubmit={addWorkout}>
+        <WorkoutForm
 
-          <input
-            style={styles.input}
-            type="text"
-            placeholder="Exercício"
-            value={exercise}
-            onChange={(e) => setExercise(e.target.value)}
-          />
+          addWorkout={addWorkout}
 
-          <input
-            style={styles.input}
-            type="number"
-            placeholder="Carga (kg)"
-            value={weight}
-            onChange={(e) => setWeight(e.target.value)}
-          />
+          exercise={exercise}
+          setExercise={setExercise}
 
-          <input
-            style={styles.input}
-            type="number"
-            placeholder="Repetições"
-            value={reps}
-            onChange={(e) => setReps(e.target.value)}
-          />
+          weight={weight}
+          setWeight={setWeight}
 
-          <button style={styles.submitButton}>
-            Adicionar treino
-          </button>
+          reps={reps}
+          setReps={setReps}
 
-        </form>
+        />
 
-        // Lista de treinos registrados
-        <section style={styles.formCard}>
-
-          <h2>Histórico de treinos</h2>
-
-          <div style={styles.workoutList}>
-
-            {workouts.map((workout) => (
-
-              <div
-                key={workout.id}
-                style={styles.workoutItem}
-              >
-
-                <strong>
-                  {workout.exercise}
-                </strong>
-
-                <p>
-                  {workout.weight}kg × {workout.reps}
-                </p>
-
-              </div>
-
-            ))}
-
-          </div>
-
-        </section>
+        <WorkoutList workouts={workouts} />
 
       </section>
     </div>
