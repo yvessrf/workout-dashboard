@@ -1,13 +1,25 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import WorkoutForm from "./components/WorkoutForm"
 import WorkoutList from "./components/WorkoutList"
 
 
 export default function App() {
-  const [workouts, setWorkouts] = useState([])
+  // Estado para armazenar a lista de treinos
+  // Inicializa o estado com os treinos salvos no localStorage, se existirem
+  const [workouts, setWorkouts] = useState(()=>{
+    const savedWorkouts = localStorage.getItem("workouts")
+    return savedWorkouts ? JSON.parse(savedWorkouts) : []
+  })
+
+
   const [exercise, setExercise] = useState("")
   const [weight, setWeight] = useState("")
   const [reps, setReps] = useState("")
+
+  // useEffect para salvar os treinos no localStorage sempre que a lista de treinos for atualizada
+  useEffect(() => {
+    localStorage.setItem("workouts", JSON.stringify(workouts))
+  }, [workouts])
 
   // Função para adicionar um novo treino
   function addWorkout(event) {
