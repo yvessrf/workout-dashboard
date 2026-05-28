@@ -1,3 +1,5 @@
+import { Plus } from "lucide-react"
+
 export default function WorkoutForm({
 
   addWorkout,
@@ -15,119 +17,237 @@ export default function WorkoutForm({
 
   return (
 
-    <section style={styles.formCard}>
+    <section
+      className="
+        max-w-3xl
+        mx-auto
+      "
+    >
 
-      <h2>Registrar treino</h2>
-
-      <form
-        style={styles.form}
-        onSubmit={addWorkout}
+      <div
+        className="
+          bg-white
+          rounded-3xl
+          border
+          border-zinc-200
+          p-8
+        "
       >
 
-        <input
-          style={styles.input}
-          type="text"
-          placeholder="Exercício"
+        <h2
+          className="
+            text-4xl
+            font-bold
+            mb-10
+          "
+        >
 
-          value={exercise}
+          Novo Treino
 
-          onChange={(event) =>
-            setExercise(event.target.value)
-          }
-        />
+        </h2>
 
-        <input
-          style={styles.input}
-          type="number"
-          placeholder="Carga (kg)"
+        <form
+          onSubmit={addWorkout}
+          className="space-y-6"
+        >
 
-          value={weight}
+          <div>
 
-          onChange={(event) =>
-            setWeight(event.target.value)
-          }
-        />
+            <label
+              className="
+                block
+                text-sm
+                font-medium
+                text-zinc-700
+                mb-2
+              "
+            >
 
-        <input
-          style={styles.input}
-          type="number"
-          placeholder="Repetições"
+              Exercício
 
-          value={reps}
+            </label>
 
-          onChange={(event) =>
-            setReps(event.target.value)
-          }
-        />
+            <input
 
-        <button style={styles.submitButton}>
-          Adicionar treino
-        </button>
+              type="text"
 
-      </form>
+              placeholder="
+                Ex: Supino reto
+              "
+
+              value={exercise}
+
+              onChange={(event) =>
+                setExercise(
+                  event.target.value
+                )
+              }
+
+              className="
+                w-full
+                h-14
+                px-4
+                rounded-2xl
+                bg-zinc-100
+                border
+                border-zinc-200
+                outline-none
+
+                focus:ring-2
+                focus:ring-orange-500
+
+                transition-all
+              "
+            />
+
+          </div>
+
+          <div
+            className="
+              grid
+              grid-cols-1
+              md:grid-cols-2
+              gap-5
+            "
+          >
+
+            <div>
+
+              <label
+                className="
+                  block
+                  text-sm
+                  font-medium
+                  text-zinc-700
+                  mb-2
+                "
+              >
+
+                Repetições
+
+              </label>
+
+              <input
+
+                type="number"
+
+                placeholder="12"
+
+                value={reps}
+
+                onChange={(event) =>
+                  setReps(
+                    event.target.value
+                  )
+                }
+
+                className="
+                  w-full
+                  h-14
+                  px-4
+                  rounded-2xl
+                  bg-zinc-100
+                  border
+                  border-zinc-200
+                  outline-none
+
+                  focus:ring-2
+                  focus:ring-orange-500
+
+                  transition-all
+                "
+              />
+
+            </div>
+
+            <div>
+
+              <label
+                className="
+                  block
+                  text-sm
+                  font-medium
+                  text-zinc-700
+                  mb-2
+                "
+              >
+
+                Carga (kg)
+
+              </label>
+
+              <input
+
+                type="number"
+
+                placeholder="80"
+
+                value={weight}
+
+                onChange={(event) =>
+                  setWeight(
+                    event.target.value
+                  )
+                }
+
+                className="
+                  w-full
+                  h-14
+                  px-4
+                  rounded-2xl
+                  bg-zinc-100
+                  border
+                  border-zinc-200
+                  outline-none
+
+                  focus:ring-2
+                  focus:ring-orange-500
+
+                  transition-all
+                "
+              />
+
+            </div>
+
+          </div>
+
+          <button
+
+            type="submit"
+
+            className="
+              w-full
+              h-14
+
+              bg-orange-500
+              hover:bg-orange-600
+
+              text-white
+              font-semibold
+
+              rounded-2xl
+
+              flex
+              items-center
+              justify-center
+              gap-2
+
+              transition-all
+            "
+          >
+
+            <Plus size={20} />
+
+            Adicionar treino
+
+          </button>
+
+        </form>
+
+      </div>
 
     </section>
 
   )
-
-}
-
-const styles = {
-
-  formCard: {
-
-    background: "rgba(255,255,255,0.08)",
-
-    padding: "24px",
-
-    borderRadius: "24px",
-
-    backdropFilter: "blur(10px)"
-
-  },
-
-  form: {
-
-    display: "grid",
-
-    gap: "16px",
-
-    marginTop: "20px"
-
-  },
-
-  input: {
-
-    padding: "14px",
-
-    borderRadius: "12px",
-
-    border: "none",
-
-    outline: "none",
-
-    background: "rgba(255,255,255,0.08)",
-
-    color: "white"
-
-  },
-
-  submitButton: {
-
-    background: "#3b82f6",
-
-    border: "none",
-
-    padding: "14px",
-
-    borderRadius: "12px",
-
-    color: "white",
-
-    fontWeight: "bold",
-
-    cursor: "pointer"
-
-  }
 
 }

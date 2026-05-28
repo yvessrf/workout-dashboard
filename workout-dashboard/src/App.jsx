@@ -1,257 +1,227 @@
-import { useState, useEffect } from 'react'
-import WorkoutForm from "./components/WorkoutForm"
-import WorkoutList from "./components/WorkoutList"
+import { AnimatePresence, motion } from "framer-motion"
+import { useEffect, useState } from "react"
+
+import MainLayout from "./layouts/MainLayout"
+
+import Feed from "./pages/Feed"
+import AddWorkout from "./pages/AddWorkout"
+import Progress from "./pages/Progress"
 
 
 export default function App() {
-  // Estado para armazenar a lista de treinos
-  // Inicializa o estado com os treinos salvos no localStorage, se existirem
-  const [workouts, setWorkouts] = useState(()=>{
-    const savedWorkouts = localStorage.getItem("workouts")
-    return savedWorkouts ? JSON.parse(savedWorkouts) : []
-  })
+  // Estado para controlar a página atual exibida
+  const [currentPage, setCurrentPage] =
+    useState("Feed")
+  // Estado para armazenar a lista de treinos, inicializado a partir do localStorage
+  const [workouts, setWorkouts] =
+    useState(() => {
 
+      const savedWorkouts =
+        localStorage.getItem("workouts")
 
-  const [exercise, setExercise] = useState("")
-  const [weight, setWeight] = useState("")
-  const [reps, setReps] = useState("")
+      return savedWorkouts
+        ? JSON.parse(savedWorkouts)
+        : []
 
-  // useEffect para salvar os treinos no localStorage sempre que a lista de treinos for atualizada
+    })
+// Estados para controlar os campos do formulário de adicionar treino
+  const [exercise, setExercise] =
+    useState("")
+// Estado para controlar o campo de peso do formulário
+  const [weight, setWeight] =
+    useState("")
+// Estado para controlar o campo de repetições do formulário
+  const [reps, setReps] =
+    useState("")
+
   useEffect(() => {
-    localStorage.setItem("workouts", JSON.stringify(workouts))
-  }, [workouts])
 
-  // Função para adicionar um novo treino
+    localStorage.setItem(
+      "workouts",
+      JSON.stringify(workouts)
+    )
+
+  }, [workouts])
+// Função para adicionar um novo treino à lista de treinos
   function addWorkout(event) {
+// Previne o comportamento padrão do formulário, que é recarregar a página
     event.preventDefault()
+// Cria um novo objeto de treino com os dados do formulário e um ID único baseado no timestamp
     const newWorkout = {
+
       id: Date.now(),
+
       exercise,
       weight,
-      reps
+      reps,
+      date: new Date().toISOString()
+
     }
-    // Atualiza a lista de treinos com o novo treino
-    setWorkouts([...workouts, newWorkout])
+// Atualiza a lista de treinos adicionando o novo treino, usando o operador spread para manter os treinos anteriores
+    setWorkouts([
+      ...workouts,
+      newWorkout
+    ])
+// Limpa os campos do formulário após adicionar o treino
     setExercise("")
     setWeight("")
     setReps("")
-  }
+// Volta para a página de feed para mostrar o treino recém-adicionado
+    setCurrentPage("Feed")
 
+  }
 
   return (
-    <div style={styles.app}>
-      <header style={styles.header}>
-        <div>
-          <h1 style={styles.title}>
-            Workout Dashboard
-          </h1>
-          <p style={styles.subtitle}>
-            Acompanhe seus treinos e evolução
-          </p>
-        </div>
-        <button style={styles.button}>
-          🌙
-        </button>
-      </header>
-      <section style={styles.statsGrid}>
-        <div style={styles.card}>
-          <h2>12</h2>
-          <p>Treinos no mês</p>
-        </div>
-        <div style={styles.card}>
-          <h2>84%</h2>
-          <p>Frequência</p>
-        </div>
-        <div style={styles.card}>
-          <h2>+18kg</h2>
-          <p>PR Supino</p>
-        </div>
-      </section>
-      <section style={styles.formCard}>
 
-        <h2>Registrar treino</h2>
+     <MainLayout
 
-        <WorkoutForm
+    currentPage={currentPage}
 
-          addWorkout={addWorkout}
+    setCurrentPage={setCurrentPage}
 
-          exercise={exercise}
-          setExercise={setExercise}
+  >
 
-          weight={weight}
-          setWeight={setWeight}
+   <AnimatePresence mode="wait">
 
-          reps={reps}
-          setReps={setReps}
+  {currentPage === "Feed" && (
 
-        />
+    <motion.div
 
-        <WorkoutList workouts={workouts} />
+      key="feed"
 
-      </section>
-    </div>
+      initial={{
+        opacity: 0,
+        y: 20
+      }}
+
+      animate={{
+        opacity: 1,
+        y: 0
+      }}
+
+      exit={{
+        opacity: 0,
+        y: -20
+      }}
+
+      transition={{
+        duration: 0.25
+      }}
+    >
+
+      <Feed workouts={workouts} />
+
+    </motion.div>
+
+  )}
+
+  {currentPage === "Adicionar" && (
+
+    <motion.div
+
+      key="add"
+
+      initial={{
+        opacity: 0,
+        y: 20
+      }}
+
+      animate={{
+        opacity: 1,
+        y: 0
+      }}
+
+      exit={{
+        opacity: 0,
+        y: -20
+      }}
+
+      transition={{
+        duration: 0.25
+      }}
+    >
+
+      <AddWorkout
+
+        addWorkout={addWorkout}
+
+        exercise={exercise}
+        setExercise={setExercise}
+
+        weight={weight}
+        setWeight={setWeight}
+
+        reps={reps}
+        setReps={setReps}
+
+      />
+
+    </motion.div>
+
+  )}
+
+  {currentPage === "Progresso" && (
+
+    <motion.div
+
+      key="progress"
+
+      initial={{
+        opacity: 0,
+        y: 20
+      }}
+
+      animate={{
+        opacity: 1,
+        y: 0
+      }}
+
+      exit={{
+        opacity: 0,
+        y: -20
+      }}
+
+      transition={{
+        duration: 0.25
+      }}
+    >
+
+      <Progress workouts={workouts} />
+
+    </motion.div>
+
+  )}
+
+</AnimatePresence>
+
+    {currentPage === "Adicionar" && (
+
+      <AddWorkout
+
+        addWorkout={addWorkout}
+
+        exercise={exercise}
+        setExercise={setExercise}
+
+        weight={weight}
+        setWeight={setWeight}
+
+        reps={reps}
+        setReps={setReps}
+
+      />
+
+    )}
+
+    {currentPage === "Progresso" && (
+
+      <Progress workouts={workouts} />
+
+    )}
+
+  </MainLayout>
+
+
   )
-}
-
-const styles = {
-
-  app: {
-
-    minHeight: "100vh",
-
-    background:
-      "linear-gradient(135deg, #0f172a, #1e293b)",
-
-    color: "white",
-
-    fontFamily: "Arial, sans-serif",
-
-    padding: "40px"
-
-  },
-
-  header: {
-
-    display: "flex",
-
-    justifyContent: "space-between",
-
-    alignItems: "center",
-
-    marginBottom: "40px"
-
-  },
-
-  title: {
-
-    fontSize: "36px",
-
-    marginBottom: "8px"
-
-  },
-
-  subtitle: {
-
-    opacity: 0.7
-
-  },
-
-  button: {
-
-    background: "#334155",
-
-    border: "none",
-
-    color: "white",
-
-    padding: "12px 16px",
-
-    borderRadius: "12px",
-
-    cursor: "pointer"
-
-  },
-
-  statsGrid: {
-
-    display: "grid",
-
-    gridTemplateColumns:
-      "repeat(auto-fit, minmax(220px, 1fr))",
-
-    gap: "20px",
-
-    marginBottom: "40px"
-
-  },
-
-  card: {
-
-    background: "rgba(255,255,255,0.08)",
-
-    backdropFilter: "blur(10px)",
-
-    padding: "24px",
-
-    borderRadius: "24px",
-
-    border: "1px solid rgba(255,255,255,0.08)"
-
-  },
-
-  formCard: {
-
-    background: "rgba(255,255,255,0.08)",
-
-    padding: "24px",
-
-    borderRadius: "24px",
-
-    backdropFilter: "blur(10px)"
-
-  },
-
-  form: {
-
-    display: "grid",
-
-    gap: "16px",
-
-    marginTop: "20px"
-
-  },
-
-  input: {
-
-    padding: "14px",
-
-    borderRadius: "12px",
-
-    border: "none",
-
-    outline: "none",
-
-    background: "rgba(255,255,255,0.08)",
-
-    color: "white"
-
-  },
-
-  submitButton: {
-
-    background: "#3b82f6",
-
-    border: "none",
-
-    padding: "14px",
-
-    borderRadius: "12px",
-
-    color: "white",
-
-    fontWeight: "bold",
-
-    cursor: "pointer"
-
-  },
-  workoutList: {
-
-    display: "grid",
-
-    gap: "16px",
-
-    marginTop: "20px"
-
-  },
-
-  workoutItem: {
-
-    background: "rgba(255,255,255,0.06)",
-
-    padding: "16px",
-
-    borderRadius: "16px"
-
-  }
 
 }
