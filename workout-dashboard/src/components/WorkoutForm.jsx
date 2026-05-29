@@ -1,7 +1,11 @@
 import { Plus } from "lucide-react"
+import { useState } from "react"
+
+import exercises from "../data/exercises"
 
 export default function WorkoutForm({
 
+  
   addWorkout,
 
   exercise,
@@ -14,6 +18,8 @@ export default function WorkoutForm({
   setReps
 
 }) {
+const [muscleGroup, setMuscleGroup] =
+  useState("")
 
   return (
 
@@ -53,52 +59,158 @@ export default function WorkoutForm({
 
           <div>
 
-            <label
-              className="
-                block
-                text-sm
-                font-medium
-                text-zinc-700
-                mb-2
-              "
-            >
+            
 
-              Exercício
+            <div className="space-y-4">
 
-            </label>
+              <div>
 
-            <input
+                <label
+                  className="
+        block
+        mb-2
+        text-sm
+        font-medium
+        text-zinc-700
+      "
+                >
 
-              type="text"
+                  Grupamento muscular
 
-              placeholder="
-                Ex: Supino reto
-              "
+                </label>
 
-              value={exercise}
+                <select
 
-              onChange={(event) =>
-                setExercise(
-                  event.target.value
-                )
-              }
+                  value={muscleGroup}
 
-              className="
-                w-full
-                h-14
-                px-4
-                rounded-2xl
-                bg-zinc-100
-                border
-                border-zinc-200
-                outline-none
+                  onChange={(event) => {
 
-                focus:ring-2
-                focus:ring-orange-500
+                    setMuscleGroup(
+                      event.target.value
+                    )
 
-                transition-all
-              "
-            />
+                    setExercise("")
+                  }}
+
+                  className="
+        w-full
+
+        p-4
+
+        rounded-2xl
+
+        border
+        border-zinc-200
+
+        bg-zinc-50
+
+        outline-none
+
+        focus:border-orange-500
+      "
+                >
+
+                  <option value="">
+
+                    Selecione
+
+                  </option>
+
+                  {Object.keys(exercises).map(
+                    (group) => (
+
+                      <option
+                        key={group}
+                        value={group}
+                      >
+
+                        {group}
+
+                      </option>
+
+                    )
+                  )}
+
+                </select>
+
+              </div>
+
+              <div>
+
+                <label
+                  className="
+        block
+        mb-2
+        text-sm
+        font-medium
+        text-zinc-700
+      "
+                >
+
+                  Exercício
+
+                </label>
+
+                <select
+
+                  value={exercise}
+
+                  onChange={(event) =>
+                    setExercise(
+                      event.target.value
+                    )
+                  }
+
+                  disabled={!muscleGroup}
+
+                  className="
+        w-full
+
+        p-4
+
+        rounded-2xl
+
+        border
+        border-zinc-200
+
+        bg-zinc-50
+
+        outline-none
+
+        focus:border-orange-500
+
+        disabled:opacity-50
+      "
+                >
+
+                  <option value="">
+
+                    Selecione
+
+                  </option>
+
+                  {muscleGroup &&
+                    exercises[muscleGroup].map(
+                      (exerciseName) => (
+
+                        <option
+                          key={exerciseName}
+                          value={exerciseName}
+                        >
+
+                          {exerciseName}
+
+                        </option>
+
+                      )
+                    )
+                  }
+
+                </select>
+
+              </div>
+
+            </div>
 
           </div>
 

@@ -1,3 +1,7 @@
+import { useContext } from "react"
+import { ThemeContext } from "../context/ThemeContext"
+import { Moon, Sun } from "lucide-react"
+
 import {
 
   Search,
@@ -8,6 +12,11 @@ import {
 export default function TopHeader() {
 
   const today = new Date()
+
+  const { theme, toggleTheme } =
+    useContext(ThemeContext)
+
+
 
   const formattedDate =
     today.toLocaleDateString(
@@ -40,6 +49,8 @@ export default function TopHeader() {
     >
 
       <div>
+
+
 
         <p
           className="
@@ -154,6 +165,35 @@ export default function TopHeader() {
 
         </button>
 
+        <button
+          onClick={toggleTheme}
+          className="
+    p-2
+    rounded-2xl
+    
+    dark:bg-zinc-800
+    bg-white
+    w-14
+    h-14
+    flex
+            items-center
+            justify-center
+
+
+    transition-colors
+  "
+        >
+
+          {theme === "light"
+
+            ? <Moon size={20} />
+
+            : <Sun size={20} />
+
+          }
+
+        </button>
+
         <div
           className="
             w-14
@@ -176,6 +216,8 @@ export default function TopHeader() {
           Y
 
         </div>
+
+
 
       </div>
 

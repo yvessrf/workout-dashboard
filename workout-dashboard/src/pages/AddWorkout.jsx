@@ -1,4 +1,6 @@
 import WorkoutForm from "../components/WorkoutForm";
+import exercises from "../data/exercises";
+import { useState } from "react"
 
 export default function AddWorkout(props){
     return(
@@ -6,3 +8,4 @@ export default function AddWorkout(props){
         <WorkoutForm {...props} />
     )
 }
+

@@ -1,4 +1,5 @@
 import TopHeader from "../components/TopHeader"
+import { NavLink } from "react-router-dom"
 
 import {
 
@@ -8,12 +9,12 @@ import {
 
 } from "lucide-react"
 
+
+
 export default function MainLayout({
     // Recebe os filhos (conteúdo das páginas) e o estado de navegação para controlar a página atual
     children,
 
-    currentPage,
-    setCurrentPage
 
 }) {
 
@@ -38,7 +39,16 @@ export default function MainLayout({
 
     return (
 
-        <div className="flex bg-zinc-100 min-h-screen">
+        <div className="
+  flex
+  min-h-screen
+
+  bg-zinc-100
+  dark:bg-zinc-950
+
+  text-black
+  dark:text-white
+">
 
             {/* SIDEBAR */}
 
@@ -47,10 +57,12 @@ export default function MainLayout({
           w-64
           min-h-screen
 
-          bg-white
+         bg-card-light
+dark:bg-card-dark
 
           border-r
-          border-zinc-200
+         border-border-light
+dark:border-border-dark
 
           p-6
 
@@ -98,41 +110,49 @@ export default function MainLayout({
 
                         return (
 
-                            <button
+                            <NavLink
+
+                                to={
+                                    item.label === "Feed"
+
+                                        ? "/feed"
+
+                                        : item.label === "Adicionar"
+
+                                            ? "/add"
+
+                                            : "/progress"
+                                }
 
                                 key={item.label}
 
-                                onClick={() =>
-                                    setCurrentPage(item.label)
-                                }
+                                className={({ isActive }) => `
+    w-full
 
-                                className={`
-                  w-full
+    flex
+    items-center
+    gap-3
 
-                  flex
-                  items-center
-                  gap-3
+    px-4
+    py-3
 
-                  px-4
-                  py-3
+    rounded-2xl
 
-                  rounded-2xl
+    transition-all
 
-                  transition-all
-
-                  ${currentPage === item.label
+    ${isActive
 
                                         ? `
-                        bg-orange-500
-                        text-white
-                      `
+          bg-orange-500
+          text-white
+        `
 
                                         : `
-                        text-zinc-600
-                        hover:bg-zinc-100
-                      `
+          text-zinc-600 dark:text-zinc-300
+          hover:bg-zinc-100 dark:hover:bg-zinc-800
+        `
                                     }
-                `}
+  `}
                             >
 
                                 <Icon size={20} />
@@ -143,8 +163,7 @@ export default function MainLayout({
 
                                 </span>
 
-                            </button>
-
+                            </NavLink>
                         )
 
                     })}
